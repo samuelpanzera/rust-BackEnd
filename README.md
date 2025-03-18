@@ -1,6 +1,6 @@
 # Inicio do projeto CRUD em Rust
 
-- Intuito é Fazer
+Intuito é Fazer
 
 - Create
 - Edit
