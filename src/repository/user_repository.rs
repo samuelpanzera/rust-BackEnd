@@ -18,6 +18,12 @@ pub fn read_user(user_id: i32) -> Result<Users, Error> {
     users.find(user_id).get_result(connection)
 }
 
+pub fn search_all_users() -> Result<Vec<Users>, Error> {
+    let connection = &mut establish_connection();
+
+    users.load(connection)
+}
+
 pub fn update_user(user_id: i32, updated_user: &UpdateUser) -> Result<Users, Error> {
     let connection = &mut establish_connection();
 

@@ -26,6 +26,13 @@ async fn read_user_handler(user_id: web::Path<i32>) -> impl Responder {
     }
 }
 
+async fn search_all_users_handler() -> impl Responder {
+    match user_repository::search_all_users() {
+        Ok(users) => HttpResponse::Ok().json(users),
+        Err(_) => HttpResponse::InternalServerError().body("Failed to read users"),
+    }
+}
+
 async fn update_user_handler(
     user_id: web::Path<i32>,
     updated_user: web::Json<UpdateUser>,
@@ -56,6 +63,7 @@ async fn main() -> std::io::Result<()> {
             .route("/users/{id}", web::get().to(read_user_handler))
             .route("/users/{id}", web::put().to(update_user_handler))
             .route("/users/{id}", web::delete().to(delete_user_handler))
+            .route("/users", web::get().to(search_all_users_handler))
     })
     .bind(("127.0.0.1", 8080))?
     .workers(2)
